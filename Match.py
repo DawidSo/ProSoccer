@@ -25,3 +25,6 @@ class Match:
             return True
         else:
             return False
+
+    def printMatchRow(self):
+        print("{} {}: {:18} - {:18} {}".format(strftime("%d %m %Y %H:%M", self.timeStart), self.league,self.homeTeam,self.awayTeam, self.matchScore))
