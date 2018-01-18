@@ -1,10 +1,10 @@
-from time import localtime, strftime
+from datetime import datetime
 
 class Match:
 
     def __init__(self):
         self.league = ""
-        self.timeStart = strftime("%H:%M", localtime())
+        self.timeStart = datetime.now()
         self.homeTeam = ""
         self.awayTeam = ""
         self.predProbHome = 0
@@ -27,4 +27,4 @@ class Match:
             return False
 
     def printMatchRow(self):
-        print("{} {}: {:18} - {:18} {}".format(strftime("%d %m %Y %H:%M", self.timeStart), self.league,self.homeTeam,self.awayTeam, self.matchScore))
+        print("{} {}: {:18} - {:18} {}".format(self.timeStart.strftime("%d %m %Y %H:%M"), self.league,self.homeTeam,self.awayTeam, self.matchScore))

@@ -1,7 +1,7 @@
 from lxml import html
 import requests
 from Match import Match
-from time import strptime
+from datetime import datetime
 
 def scrapPage(date, matches):
     url = "http://www.prosoccer.gr/en/{}/{:02d}/soccer-predictions-{}-{:02d}-{:02d}.html".format(date.year, date.month, date.year, date.month, date.day)
@@ -17,7 +17,7 @@ def scrapPage(date, matches):
         match = Match()
         match.league = matchElement.xpath('td[1]')[0].text_content()
         time = matchElement.xpath('td[2]')[0].text_content()
-        match.timeStart = strptime(dateStr + time, "%d %m %Y %H:%M")
+        match.timeStart = datetime.strptime(dateStr + time, "%d %m %Y %H:%M")
         tempTeams = matchElement.xpath('td[3]')[0].text_content()
         match.homeTeam = tempTeams[0:tempTeams.find("-") - 1]
         match.awayTeam = tempTeams[tempTeams.find("-") + 2:len(tempTeams)]
