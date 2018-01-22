@@ -2,8 +2,9 @@ from lxml import html
 import requests
 from Match import Match
 from datetime import datetime
+import csv
 
-def scrapPage(date, matches):
+def scrapPage(date, matches, file):
     url = "http://www.prosoccer.gr/en/{}/{:02d}/soccer-predictions-{}-{:02d}-{:02d}.html".format(date.year, date.month, date.year, date.month, date.day)
     dateStr = "{:02d} {:02d} {} ".format(date.day, date.month, date.year)
 
@@ -37,6 +38,30 @@ def scrapPage(date, matches):
         tempScore = matchElement.xpath('td[15]')[0].text_content()
         match.matchScore = tempScore[0:tempScore.find("-") - 1], tempScore[tempScore.find("-") + 2:len(tempScore)]
         matches.append(match)
+
+        writer = csv.writer(file)
+        tempRow = []
+        tempRow.append(match.league)
+        tempRow.append(match.timeStart.strftime("%d %m %Y %H:%M"))
+        tempRow.append(match.homeTeam)
+        tempRow.append(match.awayTeam)
+        tempRow.append(match.predProbHome)
+        tempRow.append(match.predProbDraw)
+        tempRow.append(match.predProbAway)
+        tempRow.append(match.predTips)
+        tempRow.append(match.oddsHome)
+        tempRow.append(match.oddsDraw)
+        tempRow.append(match.oddsAway)
+        tempRow.append(match.predScore1[0])
+        tempRow.append(match.predScore1[1])
+        tempRow.append(match.predScore2[0])
+        tempRow.append(match.predScore2[1])
+        tempRow.append(match.predUnder)
+        tempRow.append(match.predOver)
+        tempRow.append(match.matchScore[0])
+        tempRow.append(match.matchScore[1])
+
+        writer.writerow(tempRow)
 
 
 # page = requests.get('http://www.prosoccer.gr/en/2018/01/soccer-predictions-2018-01-14.html')
