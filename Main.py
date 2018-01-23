@@ -37,6 +37,8 @@ def main():
             print("Mecze w zakresie: {}".format(len(matches)))
         elif (chosenOption.lower() == 'q'):
             break
+        #elif chosenOption.lower() == 'f':
+
 
 
     # longestTeam = menu.longestTeam(matches)
