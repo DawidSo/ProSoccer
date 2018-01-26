@@ -8,6 +8,7 @@ class Menu:
     startDate = datetime.today()
     endDate = datetime.today()
     today = datetime.today()
+    filterParams = []
 
     def readSavedData(self, matches):
         try:
@@ -124,20 +125,34 @@ class Menu:
 
         return baseStart, baseEnd
 
-    def filterMatches(self, matches, filterKeys, filterValues):
+    def getFilter(self, filterType):
+        filterExpr = input("Podaj filtrowane wyrazenie: ")
+        self.filterParams.append((filterType, filterExpr))
+
+    def filterMatches(self, matches):
         filteredMatches = []
-        nFilters = len(filterKeys)
-        for n in range(nFilters):
-            if filterKeys[n] == "l":
-                for match in matches:
-                    if match.league == filterValues[n]:
-                        if match not in filteredMatches:
-                            filteredMatches.append(match)
-            elif filterKeys[n] == "d":
-                for match in matches:
-                    if match.homeTeam == filterValues[n] or match.awayTeam == filterValues[n]:
-                        if match not in filteredMatches:
-                            filteredMatches.append(match)
+        # nFilters = len(self.filterParams)
+
+        leagues = [elem[1] for elem in self.filterParams if elem[0] == 'l']
+        teams = [elem[1] for elem in self.filterParams if elem[0] == 'd']
+
+        for match in matches:
+            if match.league in leagues or len(leagues) == 0:
+                if match.homeTeam in teams or match.awayTeam in teams or len(teams) == 0:
+                    filteredMatches.append(match)
+
+
+        # for n in range(nFilters):
+        #     if self.filterTypes[n] == "l":
+        #         for match in matches:
+        #             if match.league == self.filterValues[n]:
+        #                 if match not in filteredMatches:
+        #                     filteredMatches.append(match)
+        #     elif self.filterTypes[n] == "d":
+        #         for match in matches:
+        #             if match.homeTeam == self.filterValues[n] or match.awayTeam == self.filterValues[n]:
+        #                 if match not in filteredMatches:
+        #                     filteredMatches.append(match)
         return filteredMatches
 
     def displayCorrectMatches(self, matches):

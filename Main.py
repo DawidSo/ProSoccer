@@ -13,12 +13,12 @@ def main():
     print("Mecze w zakresie: {}".format(len(matches)))
 
     filteredMatches = matches
-    filterKeys = []
+    filterTypes = []
     filterValues = []
 
     while True:
         print("\nMozesz wyswietlic mecze, zmienic zakres dat lub dodac/usunac filtry")
-        print("Opcje:\n'w' - wyswiet wyniki\n'z' - zmien zakres dat\n'f' - dodaj filtr\n'u' - usun filtr\n'q' - zakoncz")
+        print("Opcje:\n'w' - wyswiet wyniki\n'z' - zmien zakres dat\n'f' - dodaj filtr\n'u' - usun filtr\n'q' - zakoncz\n")
         while True:
             chosenOption = input("Wybrana opcja: ")
             if (chosenOption.lower() == "w" or chosenOption.lower() == "f" or chosenOption.lower() == "u" or chosenOption.lower() == "z" or chosenOption.lower() == "q"):
@@ -48,13 +48,8 @@ def main():
                     break
                 else:
                     print("Bledny wybor. Sprobuj ponownie")
-
-            filterExpr = input("Podaj filtrowane wyrazenie: ")
-
-            filterKeys.append(filterType)
-            filterValues.append(filterExpr)
-
-            filteredMatches = menu.filterMatches(matches, filterKeys, filterValues)
+            menu.getFilter(filterType.lower())
+            filteredMatches = menu.filterMatches(matches)
 
 
 
